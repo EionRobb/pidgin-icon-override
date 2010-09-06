@@ -134,7 +134,7 @@ static PurplePluginInfo info =
 	NULL,
 	0,
 	NULL,
-	PURPLE_PRIORITY_DEFAULT,
+	PURPLE_PRIORITY_LOWEST,
 
 	"eionrobb-icon-override",
 	"Protocol Icon Override",
@@ -142,7 +142,7 @@ static PurplePluginInfo info =
 	"Customise protocol icons",
 	"Lets you change protocol icons per-account so that you can tell the difference between, say, a personal XMPP account and one used for work",
 	"Eion Robb <eionrobb@gmail.com>",
-	"", //URL
+	"http://pidgin-icon-override.googlecode.com/", //URL
 	
 	plugin_load,
 	plugin_unload,
