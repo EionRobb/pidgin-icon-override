@@ -6,6 +6,7 @@ http://eion.robbmob.com/purple-blist-sort.png
 
 #include <glib.h>
 #include <plugin.h>
+#include <debug.h>
 #include <account.h>
 #include <accountopt.h>
 
@@ -29,7 +30,10 @@ new_list_icon(PurpleAccount *account, PurpleBuddy *buddy)
 	else if (buddy != NULL)
 		acct = buddy->account;
 	else
+	{
+		purple_debug_error("icon-override", "NULL account and buddy icon request\n");
 		return "";
+	}
 	
 	new_icon = purple_account_get_string(account, NEW_ICON_ID, NULL);
 	if (new_icon && *new_icon)
@@ -37,7 +41,11 @@ new_list_icon(PurpleAccount *account, PurpleBuddy *buddy)
 	
 	prpl_id = account->protocol_id;
 	list_icon_func = g_hash_table_lookup(original_list_icon, prpl_id);
-	return list_icon_func(account, buddy);
+	if (list_icon_func)
+		return list_icon_func(account, buddy);
+	
+	purple_debug_error("icon-override", "No original list_icon func found\n");
+	return "";
 }
 
 static gboolean

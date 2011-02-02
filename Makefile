@@ -25,15 +25,18 @@ SOURCES = \
 #Standard stuff here
 .PHONY:	all clean install sourcepackage
 
-all:	icon_override.dll icon_override.so
+all:	icon_override.dll icon_override.so icon_override64.so
 
 install:
 	cp icon_override.so /usr/lib/purple-2/
 clean:
-	rm -f icon_override.dll icon_override.so
+	rm -f icon_override.dll icon_override.so icon_override64.so
 
 icon_override.so:	${SOURCES}
 	${LINUX32_COMPILER} ${LIBPURPLE_CFLAGS} -Wall ${GLIB_CFLAGS} -I. -g -O2 -pipe ${SOURCES} -o $@ -shared -fPIC -DPIC
+
+icon_override64.so:	${SOURCES}
+	${LINUX64_COMPILER} ${LIBPURPLE_CFLAGS} -Wall ${GLIB_CFLAGS} -I. -g -O2 -pipe ${SOURCES} -o $@ -shared -fPIC -DPIC
 
 icon_override.dll:	${SOURCES}
 	${WIN32_COMPILER} ${LIBPURPLE_CFLAGS} -Wall -I. -g -O0 -pipe ${SOURCES} -o $@ -shared -mno-cygwin ${WIN32_CFLAGS} ${WIN32_LIBS}
